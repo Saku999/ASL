@@ -1,0 +1,3 @@
+#cd <cartella dove lo vogliamo>
+#npm create react-app <nome programma>
+#npm start
