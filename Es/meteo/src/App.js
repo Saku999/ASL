@@ -8,7 +8,11 @@ class App extends Component {
     this.state = {
       term: '',
       description: '',
-      main: ''
+      main: '',
+      icon: '',
+      name: '',
+      wind:'',
+      humidity: '',
     };
   }
 
@@ -21,19 +25,23 @@ class App extends Component {
     const url = `http://api.openweathermap.org/data/2.5/weather?q=${this.state.term}&APPID=${api_key}`;
     fetch(url)
       .then(response => response.json())
-      .then(data => this.setState({ term:'', description: data.weather[0].description, main: data.weather[0].main}))
+      .then(data => this.setState({ term:'', name: data.name, description: data.weather[0].description, main: data.weather[0].main, wind: data.wind.speed, humudity: data.main.humidity}))
       .catch(e => console.log('error', e));
   }
 
   render() {
+    const icona = "http://openweathermap.org/img/w/" + this.state.icon;
     return (
       <div className="App">
         <form onSubmit={this.handleSubmit}>
-          <input value={this.state.term} onChange={this.onChange} />
-          <button>Search!</button>
+          <p id="title">City: <input value={this.state.term} onChange={this.onChange} />
+          <button>Search!</button> </p>
         </form>
-        <p> Meteo: {this.state.main} </p>
-        <p> Descrizione: {this.state.description} </p>
+        <p> Location: <span class="text"> {this.state.name} </span> </p>
+        <p> Weather: <span class="text"> {this.state.main} </span> </p>
+        <p> Description: <span class="text"> {this.state.description} </span></p>
+        <p> Wind speed: <span class="text"> {this.state.wind} Km/h</span></p>
+        <p> Humidity: <span class="text"> {this.state.humudity} %</span></p>
       </div>
     );
   }
